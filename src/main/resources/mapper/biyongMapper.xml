@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springbootdatabase.dao.BiyongDao">
+    <select id="printbiyong" resultType="com.springbootdatabase.model.Biyong" parameterType="com.springbootdatabase.model.Biyong">
+    select * from biyong WHERE id = #{id}
+    </select>
+
+    <insert id="setBiyong" parameterType="com.springbootdatabase.model.Biyong">
+        insert into biyong values(#{id}, #{g}, #{b}, #{d},#{i}, #{build}, #{inte}, #{sul},#{ga}, #{gita}, #{chong}, #{year},#{menth}, #{ingun}, #{zeryo}, #{gita2},#{danga})
+    </insert>
+    <delete id="deleteBiyong" parameterType="com.springbootdatabase.model.Biyong">
+        delete from biyong where id = #{id}
+    </delete>
+</mapper>

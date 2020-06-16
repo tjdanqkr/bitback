@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springbootdatabase.dao.DataDao" >
+
+    <select id="getSang" resultType="com.springbootdatabase.model.Jsonreturn" parameterType="com.springbootdatabase.model.DataModel">
+        select totalscore,gil from sang WHERE dong=#{dong}
+    </select>
+    <select id="getSung" resultType="com.springbootdatabase.model.Jsonreturn" parameterType="com.springbootdatabase.model.DataModel">
+        select totalscore,gil from sung WHERE dong=#{dong}
+    </select>
+    <select id="getPeople" resultType="com.springbootdatabase.model.Jsonreturn" parameterType="com.springbootdatabase.model.DataModel">
+        select totalscore,gil from people WHERE dong=#{dong}
+    </select>
+    <select id="getPur" resultType="com.springbootdatabase.model.Jsonreturn" parameterType="com.springbootdatabase.model.DataModel">
+        select totalscore,gil from pur1 WHERE dong=#{dong}
+    </select>
+</mapper>
