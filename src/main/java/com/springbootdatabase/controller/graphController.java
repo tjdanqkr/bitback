@@ -1,9 +1,11 @@
 package com.springbootdatabase.controller;
 
+import com.springbootdatabase.model.ChuiDto;
 import com.springbootdatabase.model.DataModel;
 import com.springbootdatabase.model.Jsonreturn;
 import com.springbootdatabase.model.Upjong;
 import com.springbootdatabase.model.instarDto;
+import com.springbootdatabase.model.instarDto2;
 import com.springbootdatabase.service.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +54,7 @@ public class graphController {
         HashMap<String,String> map = new HashMap<>();
         String url = "http://localhost:5000/instar";
         map.put("word",post.get("word").toString());//request로 날아오는것에서 원하는 정보 빼줌
-
+        
         String Onedate =post.get("date1").toString(); //2020-06-08
         String twodate =post.get("date2").toString(); //2020-06-11
         System.out.println("Onedate:"+Onedate);
@@ -102,6 +106,7 @@ public class graphController {
 
  //     ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         ResponseEntity<instarDto[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, instarDto[].class);
+        System.out.println(responseEntity);
         System.out.println(responseEntity.getBody());
         //날짜의 시작,끝,검색값
         //카운트값
@@ -111,21 +116,48 @@ public class graphController {
     }
     @ResponseBody// 통신 메시지 관련 header와 body의 값들을 하나의 객체로 저장하는 것이 HttpEntity 클래스 객체,Request 부분일 경우 HttpEntity를 상속받은 RequestEntity가, Response 부분일 경우 HttpEntity를 상속받은 ResponseEntity가 하게
     @RequestMapping(value ="/api/chui", method = RequestMethod.POST)// RestTemplate 이용하여 Flask에 접속
-    public ResponseEntity<instarDto[]> chui(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception
+    public ChuiDto[] chui(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception
     {
         request.setCharacterEncoding("UTF-8");
+        
+        
         RestTemplate restTemplate = new RestTemplate();
         HashMap<String,String> map = new HashMap<>();
-        String url = "http://localhost:5000/mongoTest";
+        String url = "http://localhost:5000/chuigr";
         //map.put("classes",post.get("classes").toString());//request로 날아오는것에서 원하는 정보 빼줌
-
+        map.put("dong",post.get("dong").toString());
         HttpEntity<?> entity = new HttpEntity<>(map);
         //String responseEntity = restTemplate.getForObject(url, String.class, map);
 
-        ResponseEntity<instarDto[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, instarDto[].class);
+        ResponseEntity<ChuiDto[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, ChuiDto[].class);
         System.out.println(responseEntity);
+        ChuiDto[] json = responseEntity.getBody();
+        System.out.println(json[0].get기준_년_코드());
+        System.out.println(json[0].get기준_분기_코드());
+        System.out.println(json[0].get분기별_매출());
+        System.out.println(json[0].get상권_코드_명());
+        return json;
+    }
+    @ResponseBody
+    @RequestMapping(value ="/api/instar2", method = RequestMethod.GET) //api/instar2가 키, 기능에 따라 method = RequestMethod.?이 들어가는것.
+    public List<String> instar2() throws Exception
+    {
+        RestTemplate restTemplate = new RestTemplate();
+        HashMap<String,String> map = new HashMap<>();
+        String url = "http://localhost:5000/instar2";
 
-        return responseEntity;
+        HttpEntity<?> entity = new HttpEntity<>(map);
+        ResponseEntity<instarDto2> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, instarDto2.class);
+        System.out.println(responseEntity.getBody());
+
+        instarDto2 a=responseEntity.getBody();
+        List<String> list = new ArrayList<>();
+        for(int i =0; i< a.getDate().length;++i)
+        {
+            list.add(a.getDate()[i]);
+        }
+        System.out.println(a);
+        return list;
     }
 
     //@ResponseBody와 ResponseEntity를 return하는거나 같은 결과이지만 구현방법이 틀릴 뿐이다.

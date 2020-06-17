@@ -1,6 +1,7 @@
 package com.springbootdatabase.controller;
 
 import com.springbootdatabase.model.Biyong;
+import com.springbootdatabase.model.CucheonDto;
 import com.springbootdatabase.model.hap;
 import com.springbootdatabase.model.predictyear;
 import com.springbootdatabase.service.BiyongService;
@@ -34,7 +35,7 @@ public class biyongController {
 
         Biyong biyong1 = new Biyong();
         biyong1.setId(post.get("id").toString());
-
+        System.out.println(biyong1.getId());
         hap biyong = biyongService.happrintbiyong(biyong1);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -47,9 +48,7 @@ public class biyongController {
 
         predictyear[] a=responseEntity.getBody();
 
-        System.out.println(a.length);
-        System.out.println(biyong.getHap());
-        System.out.println(biyong.getDanga());
+
         Map<String,HashMap> outmap= new HashMap<String,HashMap>(); //map안에 제네릭 다 써줄 필요없음.
         List<Map<String,String>> list = new ArrayList<>();
 
@@ -62,9 +61,32 @@ public class biyongController {
             inmap.put("gil",a[i].get상권_코드_명()); //길이름의 맵
             list.add(inmap);
         }
+        
        // biyongService.deletebiyong(biyong1);
         return list;
     }
+
+    @ResponseBody
+    @RequestMapping(value ="/api/gil", method = RequestMethod.POST)
+    public CucheonDto[] gilcucheon(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception
+    {
+        request.setCharacterEncoding("UTF-8");
+        RestTemplate restTemplate = new RestTemplate();
+        HashMap<String,String> map = new HashMap<>();
+        String url = "http://localhost:5000/gilcucheon";
+        map.put("dong",post.get("dong").toString());
+
+        HttpEntity<?> entity = new HttpEntity<>(map);
+
+        ResponseEntity<CucheonDto[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, CucheonDto[].class);
+        System.out.println(responseEntity.getBody());
+        CucheonDto[] list = responseEntity.getBody();
+        
+    
+
+        return list;
+    }
+
 
     @RequestMapping(value="/api/biyong",method=RequestMethod.POST) //insert
     public String biyong(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception

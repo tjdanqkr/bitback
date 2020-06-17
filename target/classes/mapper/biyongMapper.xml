@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springbootdatabase.dao.BiyongDao">
+     <select id="happrintbiyong" resultType="com.springbootdatabase.model.hap" parameterType="com.springbootdatabase.model.Biyong">
+        select g+b+(((d*i)*0.01)/12)+d+build+inte+sul+ga+gita+(chong/year)+menth+ingun+zeryo+gita2 AS hap,danga AS danga from biyong WHERE id = #{id} </select>
     <select id="printbiyong" resultType="com.springbootdatabase.model.Biyong" parameterType="com.springbootdatabase.model.Biyong">
     select * from biyong WHERE id = #{id}
     </select>

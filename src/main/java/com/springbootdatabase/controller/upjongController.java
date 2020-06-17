@@ -1,5 +1,6 @@
 package com.springbootdatabase.controller;
 
+import com.springbootdatabase.model.CucheonDto;
 import com.springbootdatabase.model.Upjong;
 import com.springbootdatabase.service.UpjongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class upjongController {
 
     @Autowired
     private UpjongService upjongService;
-
+    
 //    @ResponseBody//select
 //    @RequestMapping(value="/upjong2",method= RequestMethod.POST)
 //    public HashMap<String, List<Upjong>> upjong(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception
@@ -30,7 +31,7 @@ public class upjongController {
 //        HashMap<String,List<Upjong>> upjong2 = upjongService.printUpjong(upjong1);
 //        return upjong2;
 //    }
-
+    
     @ResponseBody
     @RequestMapping(value ="/api/upjong", method = RequestMethod.POST)
     public ResponseEntity<Upjong[]> upjong(@RequestBody final HashMap<String,Object> post, HttpServletRequest request) throws Exception

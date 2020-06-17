@@ -16,6 +16,7 @@ public class BiyongServiceImpl implements BiyongService {
     @Override
     public hap happrintbiyong(final Biyong biyong) {
         final hap biyong1 = biyongDao.happrintbiyong(biyong);
+        System.out.println(biyong1);
         return biyong1;
     }
 
